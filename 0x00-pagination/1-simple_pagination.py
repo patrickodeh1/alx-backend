@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Pagination"""
 import csv
 from typing import List
 
