@@ -2,10 +2,10 @@
 """pagination"""
 import csv
 import math
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Tuple
 
 
-def index_range(page: int, page_size: int) -> tuple:
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """Calculate the start and end index for pagination.
 
     Args:
@@ -13,7 +13,7 @@ def index_range(page: int, page_size: int) -> tuple:
         page_size (int): The number of items per page.
 
     Returns:
-        tuple: A tuple containing the start and end index.
+        Tuple[int, int]: A tuple containing the start and end index.
     """
     start = (page - 1) * page_size
     end = start + page_size
@@ -63,8 +63,8 @@ class Server:
         """Returns the specified page of data.
 
         Args:
-            page (int): The page number to retrieve.
-            page_size (int): The number of records per page.
+            page (int): The page number to retrieve. Defaults to 1.
+            page_size (int): The number of records per page. Defaults to 10.
 
         Returns:
             List[List[str]]: The data for the specified page.
@@ -73,6 +73,7 @@ class Server:
             "Page must be a positive integer."
         assert isinstance(page_size, int) and page_size > 0, \
             "Page size must be a positive integer."
+
         start, end = index_range(page, page_size)
         return self.dataset()[start:end]
 
@@ -80,8 +81,8 @@ class Server:
         """Provides pagination metadata.
 
         Args:
-            page (int): The current page number.
-            page_size (int): The number of records per page.
+            page (int): The current page number. Defaults to 1.
+            page_size (int): The number of records per page. Defaults to 10.
 
         Returns:
             Dict[str, Any]: A dictionary containing pagination
@@ -103,8 +104,8 @@ class Server:
         """Pagination with dynamic indexing after deletions.
 
         Args:
-            index (int): The starting index for pagination.
-            page_size (int): The number of records per page.
+            index (int): The starting index for pagination. Defaults to 0.
+            page_size (int): The number of records per page. Defaults to 10.
 
         Returns:
             Dict[str, Any]: A dictionary containing pagination
